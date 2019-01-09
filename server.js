@@ -4,6 +4,8 @@ var bodyParser = require("body-parser");
 var mysql = require('mysql');
 var app = express();
 
+const {getDashboard} = require('./routes/dashboard');
+
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -32,7 +34,7 @@ app.get('/', function (req, res) {
   res.sendFile('/xampp/htdocs/SIRTP2/index.html');
 });
 
-app.get('/dashboard', function(request, response) {
+/*app.get('/dashboard', function(request, response) {
   if (request.session.loggedin) {
     console.log(request.session);
     //response.send('Welcome back, ' + request.session.username + '!');
@@ -42,7 +44,9 @@ app.get('/dashboard', function(request, response) {
   }
   response.sendFile('/xampp/htdocs/SIRTP2/public/dashboard.html');
   //response.end();
-});
+});*/
+
+app.get('/dashboard', getDashboard);
 
 app.get('/users', function(req, res) {
   //res.sendFile(path.join(__dirname+ '/myfile.html'));

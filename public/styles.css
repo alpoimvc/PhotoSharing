@@ -22,6 +22,10 @@
 	justify-content: center;
 }
 
+.table {
+  margin-top: 5rem;
+}
+
 #dashboardNavbar {
   border-bottom: 1px solid black;
 }
