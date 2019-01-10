@@ -1,10 +1,13 @@
-var express = require('express');
-var session = require('express-session');
-var bodyParser = require("body-parser");
-var mysql = require('mysql');
-var app = express();
+const express = require('express');
+const session = require('express-session');
+const fileUpload = require('express-fileupload');
+const bodyParser = require("body-parser");
+const mysql = require('mysql');
+const path = require('path');
+const app = express();
 
 const {getDashboard} = require('./routes/dashboard');
+const {sendImage} = require('./routes/dashboard');
 
 const con = mysql.createConnection({
   host: "localhost",
@@ -14,10 +17,10 @@ const con = mysql.createConnection({
 });
 
 con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  app.listen(3000);
-  console.log('Server listening on port 3000');
+    if (err) {
+        throw err;
+    }
+    console.log('Connected to database');
 });
 global.con = con;
 
@@ -26,27 +29,21 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-app.use(bodyParser.urlencoded({extended:true}));
+
+app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
+app.set('view engine', 'ejs'); // configure template engine
+app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-app.use(express.static('public'))
+app.use(express.static('public'));
+app.use(fileUpload()); // configure fileupload
 
 app.get('/', function (req, res) {
   res.sendFile('/xampp/htdocs/SIRTP2/index.html');
 });
 
-/*app.get('/dashboard', function(request, response) {
-  if (request.session.loggedin) {
-    console.log(request.session);
-    //response.send('Welcome back, ' + request.session.username + '!');
-    //response.sendFile('/xampp/htdocs/SIRTP2/public/dashboard.html');
-  } else {
-    response.send('Please login to view this page!');
-  }
-  response.sendFile('/xampp/htdocs/SIRTP2/public/dashboard.html');
-  //response.end();
-});*/
-
 app.get('/dashboard', getDashboard);
+
+app.post('/send/:username', sendImage);
 
 app.get('/users', function(req, res) {
   //res.sendFile(path.join(__dirname+ '/myfile.html'));
@@ -93,3 +90,5 @@ app.post('/login', function(request, response) {
     response.end();
   }
 });
+
+app.listen(3000);
