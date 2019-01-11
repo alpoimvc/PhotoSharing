@@ -29,18 +29,18 @@ module.exports = {
         let uploadedFile = req.files.image;
         let image_name = uploadedFile.name;
         let fileExtension = uploadedFile.mimetype.split('/')[1];
-        //image_name = sender + '.' + fileExtension;
-        image_name = req.files.image.name + '.' + fileExtension;
+        image_name = req.files.image.name;
+        //image_name = req.files.image.name + '.' + fileExtension;
 
         // check the filetype before uploading it
         if (uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' || uploadedFile.mimetype === 'image/gif') {
             // upload the file to the /public/assets/img directory
-            uploadedFile.mv(`public/assets/img/${image_name}`, (err ) => {
+            uploadedFile.mv(`public/assets/img/${uploadedFile.name}`, (err ) => {
                 if (err) {
                     return res.status(500).send(err);
                 }
                 // send the player's details to the database
-                let query = "INSERT INTO `sharedfiles` (sender, receiver, image) VALUES ('" +
+                let query = "INSERT INTO sharedfiles (sender, receiver, image) VALUES ('" +
                     sender + "', '" + receiver + "', '" + image_name + "')";
                 con.query(query, (err, result) => {
                     if (err) {

@@ -1,14 +1,24 @@
 const express = require('express');
+const app = express();
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 const bodyParser = require("body-parser");
 const mysql = require('mysql');
 const path = require('path');
-const app = express();
+
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+
+app.use(function(req, res, next){
+  res.locals.session = req.session;
+  next();
+});
 
 const {getDashboard} = require('./routes/dashboard');
 const {sendImage} = require('./routes/dashboard');
-
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -23,12 +33,6 @@ con.connect(function(err) {
     console.log('Connected to database');
 });
 global.con = con;
-
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true
-}));
 
 app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
 app.set('view engine', 'ejs'); // configure template engine
@@ -59,14 +63,10 @@ app.get('/search',function(req,res){
 
 app.post('/send/:username', sendImage);
 
-app.get('/users', function(req, res) {
-  //res.sendFile(path.join(__dirname+ '/myfile.html'));
-  con.query('SELECT * FROM users', (err, rows, fields)=>{
-    if(!err) 
-    res.send(rows);
-    else
-    console.log(err);
-  });
+app.get('/download/:image', function(req, res){
+  console.log(req.params.image);
+  var file = __dirname + '/public/assets/img/'+req.params.image;
+  res.download(file); // Set disposition and send it.
 });
 
 app.post('/register', function(request, response) {

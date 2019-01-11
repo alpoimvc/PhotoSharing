@@ -25,14 +25,16 @@
                 </thead>
                 <tbody>
                     <% files.forEach((file, index) => { %>
-                        <tr>
-                            <th scope="row"><%= file.id %></th>
-                            <td><%= file.sender %></td>
-                            <td><%= file.image %></td>
-                            <td>
-                                <button type="submit" class="btn btn-primary">Send</button>
-                            </td>
-                        </tr>
+                        <% if(file.receiver == session.username){ %>
+                            <tr>
+                                <th scope="row"><%= file.id %></th>
+                                <td><%= file.sender %></td>
+                                <td><%= file.image %></td>
+                                <td>
+                                    <a href="/download/<%= file.image %>" class="button">Download</a>
+                                </td>
+                            </tr>
+                        <% } %>
                     <% }) %>
                 </tbody>
             </table>
