@@ -43,6 +43,20 @@ app.get('/', function (req, res) {
 
 app.get('/dashboard', getDashboard);
 
+app.get('/search',function(req,res){
+  let query = 'SELECT username FROM accounts WHERE username like "%'+req.query.key+'%"';
+  console.log(query)
+  con.query(query, function(err, rows, fields) {
+    if (err) throw err;
+    var data=[];
+    for(i=0;i<rows.length;i++)
+      {
+        data.push(rows[i].username);
+      }
+      res.end(JSON.stringify(data));
+  });
+});
+
 app.post('/send/:username', sendImage);
 
 app.get('/users', function(req, res) {

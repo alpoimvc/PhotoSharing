@@ -3,7 +3,7 @@ const fs = require('fs');
 module.exports = {
     getDashboard: (req, res) => {
         if(req.session.username){
-            let query = "SELECT * FROM `accounts` ORDER BY id ASC"; // query database to get all the players
+            let query = "SELECT * FROM sharedfiles ORDER BY id ASC"; // query database to get all the players
 
             // execute query
             con.query(query, (err, result) => {
@@ -13,7 +13,7 @@ module.exports = {
                 //res.render('./public/dashboard.ejs', {
                 res.render('dashboard.ejs', {
                     title: "Welcome to PicShare | View Users"
-                    ,players: result
+                    ,files: result
                 });
             });
         }else{
