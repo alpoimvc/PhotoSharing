@@ -57,4 +57,40 @@ module.exports = {
             });
         }
     },
+    uploadImage: (req, res) => {
+        if (!req.files) {
+            return res.status(400).send("No files were uploaded.");
+        }
+        let owner = req.session.username;
+        let uploadedFile = req.files.image;
+        let image_name = uploadedFile.name;
+        let fileExtension = uploadedFile.mimetype.split('/')[1];
+        image_name = req.files.image.name;
+        //image_name = req.files.image.name + '.' + fileExtension;
+
+        // check the filetype before uploading it
+        if (uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' || uploadedFile.mimetype === 'image/gif') {
+            // upload the file to the /public/assets/img directory
+            uploadedFile.mv(`public/assets/uploads/${uploadedFile.name}`, (err ) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                // send the player's details to the database
+                let query = "INSERT INTO uploads (image, owner) VALUES ('" +
+                    image_name + "', '" + owner + "')";
+                con.query(query, (err, result) => {
+                    if (err) {
+                        return res.status(500).send(err);
+                    }
+                    res.redirect('/dashboard');
+                });
+            });
+        } else {
+            message = "Invalid File format. Only 'gif', 'jpeg' and 'png' images are allowed.";
+            res.render('index.ejs', {
+                message,
+                title: "Welcome to PicShare"
+            });
+        }
+    },
 };

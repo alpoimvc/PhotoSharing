@@ -1,14 +1,20 @@
 <% include header.ejs %>
 
     <div class="bs-example">
-        <h2>Send files:</h2>
+        <h2>Send file:</h2>
         <input type="text" name="typeahead" class="typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="username...">
         <image id="img" />
         <form id="myForm" onsubmit="yourFunction()" method="post" enctype="multipart/form-data">
-            <input id="file" type="file" name="image" id="player-img" required>
+            <input id="file" type="file" name="image" required>
             <button type="submit" class="btn btn-primary">Send</button>
         </form>
-        
+    </div>
+    <div class="bs-example">
+        <h2>Upload file:</h2>
+        <form id="myForm" action="/upload" method="post" enctype="multipart/form-data">
+            <input id="file2" type="file" name="image"required>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
     </div>
 
     <div class="table-wrapper">

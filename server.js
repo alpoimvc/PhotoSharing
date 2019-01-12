@@ -19,6 +19,9 @@ app.use(function(req, res, next){
 
 const {getDashboard} = require('./routes/dashboard');
 const {sendImage} = require('./routes/dashboard');
+const {uploadImage} = require('./routes/dashboard');
+const {getImages} = require('./routes/myImages');
+
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -35,6 +38,7 @@ con.connect(function(err) {
 global.con = con;
 
 app.set('views', __dirname + '/views'); // set express to look in this folder to render our view
+app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs'); // configure template engine
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -42,14 +46,16 @@ app.use(express.static('public'));
 app.use(fileUpload()); // configure fileupload
 
 app.get('/', function (req, res) {
-  res.sendFile('/xampp/htdocs/SIRTP2/index.html');
+  //res.sendFile('/xampp/htdocs/SIRTP2/index.html');
+  //res.render('index.html');
+  res.render('index', { user: req.session.username });
 });
 
 app.get('/dashboard', getDashboard);
+app.get('/myImages', getImages);
 
 app.get('/search',function(req,res){
   let query = 'SELECT username FROM accounts WHERE username like "%'+req.query.key+'%"';
-  console.log(query)
   con.query(query, function(err, rows, fields) {
     if (err) throw err;
     var data=[];
@@ -62,9 +68,9 @@ app.get('/search',function(req,res){
 });
 
 app.post('/send/:username', sendImage);
+app.post('/upload', uploadImage);
 
 app.get('/download/:image', function(req, res){
-  console.log(req.params.image);
   var file = __dirname + '/public/assets/img/'+req.params.image;
   res.download(file); // Set disposition and send it.
 });
@@ -106,3 +112,16 @@ app.post('/login', function(request, response) {
 });
 
 app.listen(3000);
+
+
+
+app.post('/logout', function(req, res) {
+  logout.logoutUser(req, res, function(err, data) {
+    if (err) {
+      res.json({ 'error': data.error, 'message': data.message });
+    } else {
+      res.json({ 'success': data.success, 'message': data.message });
+    }
+  });
+});
+
