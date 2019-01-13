@@ -1,8 +1,11 @@
+.container {
+  font-family: 'Timmana', sans-serif;
+}
+
 .home-intro {
 	color: black;
 	width: 100%;
 	height: 90vh;
-	text-align:center;
 	background: url("bg3.jpg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -19,13 +22,24 @@
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
 	-ms-flex-pack: center;
-	justify-content: center;
   position: relative;
+  float:right;
 }
 
-.menu-footer {
-    float: right;
-    display: inline-block;
+#logo {
+  color: white;
+  position: relative;
+  float:right;
+  font-family: 'Timmana', sans-serif;
+  font-size: 350%;
+  margin: 0px 0px 160px 950px;
+}
+
+#id {
+  float: right;
+  display: inline-block;
+  margin-bottom: -2px;
+  font-family: Arial !important;
 }
 
 .nav-item {
@@ -33,7 +47,7 @@
 }
 
 .table {
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 .my-name {
@@ -50,6 +64,7 @@
 
 #dashboardNavbar {
   border-bottom: 1px solid black;
+  padding-top: 19px;
 }
 
 .fa {
@@ -106,7 +121,7 @@ button:hover {
 /* Extra styles for the cancel button */
 .cancelbtn {
   padding: 14px 20px;
-  background-color: #f44336;
+  background-color: #f44336 !important;
 }
 
 /* Float cancel and signup buttons and add an equal width */
@@ -115,19 +130,26 @@ button:hover {
   width: 50%;
 }
 
+button {
+  background-color: #0F78D3 !important;
+}
+
+.signupbtn {
+  background-color: #0F78D3
+}
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
-  top: 0;
+  margin-top: -50px;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
-  padding-top: 20px;
 }
 
 /* Modal Content/Box */
@@ -137,6 +159,7 @@ button:hover {
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
   max-width: 700px;
+  padding-top: 20px;
 }
 
 /* Style the horizontal ruler */
@@ -171,22 +194,32 @@ hr {
 }
 
 .table-wrapper {
-        margin: 150px 100px 100px 100px;
+  margin: 150px 100px 100px 100px;
 }
 
-  .player-img {
-      width: 40px;
-      height: 40px;
-  }
-
-  .add-player-form {
-      margin-top: 50px;
-  }
-  .bs-example{
-    font-family: sans-serif;
-    position: relative;
-    margin: 100px 100px 0px 100px;
+.table-wrapper h2{
+  font-family: 'Timmana', sans-serif;
 }
+
+.player-img {
+    width: 40px;
+    height: 40px;
+}
+
+.add-player-form {
+    margin-top: 50px;
+}
+
+.bs-example{
+  font-family: sans-serif;
+  position: relative;
+  margin: 100px 100px 0px 100px;
+}
+
+.bs-example h2{
+  font-family: 'Timmana', sans-serif;
+}
+
 .btn {
   width: 20%;
 }
@@ -244,7 +277,7 @@ a.button {
   -moz-appearance: button;
   appearance: button;
   color: #fff;
-  background-color: #007bff;
+  background-color: #0F78D3 !important;
   border-color: #007bff;
   display: inline-block;
   font-weight: 400;

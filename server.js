@@ -113,15 +113,13 @@ app.post('/login', function(request, response) {
 
 app.listen(3000);
 
-
-
-app.post('/logout', function(req, res) {
-  logout.logoutUser(req, res, function(err, data) {
-    if (err) {
-      res.json({ 'error': data.error, 'message': data.message });
+app.get('/logout',function(req,res){
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
     } else {
-      res.json({ 'success': data.success, 'message': data.message });
+      res.redirect('/');
     }
-  });
+});
 });
 
