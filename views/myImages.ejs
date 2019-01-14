@@ -8,7 +8,6 @@
             <div class="grid-container" id="images">
                 <% files.forEach((file, index) => { %>
                     <div class="grid-item">
-                    <%console.log(file.image) %>
                         <img src="/assets/img/<%= file.image %>" class="gridImage" alt="" onclick="gridClick(this.src)">
                     </div>
                 <% }) %>
@@ -24,10 +23,15 @@
         <img class="modal-content" id="img01">
     </div>
 
-</body>
-<script>
+    <style>
+        body {
+            background-color: #f3f5f6;
+        }
 
-</script>
+    </style>
+
+</body>
+
 <script src="script.js"></script>
 </html>
 

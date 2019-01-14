@@ -32,7 +32,7 @@
   float:right;
   font-family: 'Timmana', sans-serif;
   font-size: 350%;
-  margin: 0px 0px 160px 950px;
+  margin: 0px 0px 200px 1100px;
 }
 
 #id {
@@ -44,6 +44,10 @@
 
 .nav-item {
     display: inline-block;
+}
+
+.navbar-brand{
+  font-size: 160%;
 }
 
 .table {
@@ -142,9 +146,8 @@ button {
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 10; /* Sit on top */
   left: 0;
-  margin-top: -50px;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
@@ -162,6 +165,10 @@ button {
   padding-top: 20px;
 }
 
+#img01 {
+  margin-top: 10%;
+}
+
 /* Style the horizontal ruler */
 hr {
   border: 1px solid #f1f1f1;
@@ -172,8 +179,8 @@ hr {
 .close {
   color: white !important;
   position: absolute;
-  top: 100px;
-  right: 150px;
+  top: 160px;
+  right: 300px;
   font-size: 40px;
   font-weight: bold;
   transition: 0.3s;
@@ -271,6 +278,7 @@ hr {
   width: 400px;
   height: 350px;
   float:right;
+  background-color: #f3f5f6;
 }
 a.button {
   -webkit-appearance: button;
@@ -305,7 +313,6 @@ a.button {
   margin-bottom: auto;
 }
 .grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
   text-align: center;
 }
@@ -315,6 +322,10 @@ a.button {
 }
 
 .gridImage:hover {opacity: 0.7;}
+
+#profileForm {
+  margin: 8em;
+}
 
 @media screen and (max-width: 1000px) {
   .grid-container {

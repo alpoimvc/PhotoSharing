@@ -18,9 +18,12 @@ app.use(function(req, res, next){
 });
 
 const {getDashboard} = require('./routes/dashboard');
+const {getProfile} = require('./routes/profile');
+const {getImages} = require('./routes/myImages');
+
 const {sendImage} = require('./routes/dashboard');
 const {uploadImage} = require('./routes/dashboard');
-const {getImages} = require('./routes/myImages');
+const {updateUser} = require('./routes/profile');
 
 const con = mysql.createConnection({
   host: "localhost",
@@ -52,6 +55,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/dashboard', getDashboard);
+app.get('/profile', getProfile);
 app.get('/myImages', getImages);
 
 app.get('/search',function(req,res){
@@ -69,6 +73,7 @@ app.get('/search',function(req,res){
 
 app.post('/send/:username', sendImage);
 app.post('/upload', uploadImage);
+app.post('/profile', updateUser);
 
 app.get('/download/:image', function(req, res){
   var file = __dirname + '/public/assets/img/'+req.params.image;
