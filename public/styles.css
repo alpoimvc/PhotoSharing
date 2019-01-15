@@ -6,7 +6,7 @@
 	color: black;
 	width: 100%;
 	height: 90vh;
-	background: url("bg3.jpg") no-repeat center center fixed;
+	background: url("bg.jpg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -275,7 +275,7 @@ hr {
 }
 #img{
   margin-right:40px;
-  width: 400px;
+  width: 450px;
   height: 350px;
   float:right;
   background-color: #f3f5f6;
@@ -309,7 +309,7 @@ a.button {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, 300px);
   margin-bottom: auto;
 }
 .grid-item {

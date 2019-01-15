@@ -1,4 +1,5 @@
 const fs = require('fs');
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
     getProfile: (req, res) => {
@@ -18,17 +19,18 @@ module.exports = {
         }
     },
     updateUser: (req, res) => {
-        
         let username = req.session.username;
         let email = req.body.email;
         let password = req.body.password;
 
-        let query = "UPDATE accounts set email= '" + email + "', password ='" + password + "' WHERE username = '" + username + "'";
+        bcrypt.hash(password, null, null, function(err, hash) {
+        let query = "UPDATE accounts set email= '" + email + "', password ='" + hash + "' WHERE username = '" + username + "'";
         con.query(query, (err, result) => {
             if (err) {
                 return res.status(500).send(err);
             }
             res.redirect('/dashboard');
+        });
         });
     },
     

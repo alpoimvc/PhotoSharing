@@ -8,7 +8,7 @@
             <div class="grid-container" id="images">
                 <% files.forEach((file, index) => { %>
                     <div class="grid-item">
-                        <img src="/assets/img/<%= file.image %>" class="gridImage" alt="" onclick="gridClick(this.src)">
+                        <img src="/assets/uploads/<%= file.image %>" class="gridImage" alt="" onclick="gridClick(this.src)">
                     </div>
                 <% }) %>
             </div>
