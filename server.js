@@ -5,7 +5,6 @@ const fileUpload = require('express-fileupload');
 const bodyParser = require("body-parser");
 const mysql = require('mysql');
 const path = require('path');
-var bcrypt = require('bcrypt-nodejs');
 
 app.use(session({
   secret: 'secret',
@@ -18,12 +17,18 @@ app.use(function(req, res, next){
   next();
 });
 
-const {getDashboard} = require('./routes/dashboard');
-const {getProfile} = require('./routes/profile');
-const {getImages} = require('./routes/myImages');
+const {login} = require('./routes/user');
+const {register} = require('./routes/user');
+const {logout} = require('./routes/user');
 
+const {getDashboard} = require('./routes/dashboard');
+const {searchUser} = require('./routes/dashboard');
 const {sendImage} = require('./routes/dashboard');
 const {uploadImage} = require('./routes/dashboard');
+const {downloadImage} = require('./routes/dashboard');
+const {getImages} = require('./routes/myImages');
+const {getProfile} = require('./routes/profile');
+
 const {updateUser} = require('./routes/profile');
 
 const con = mysql.createConnection({
@@ -54,87 +59,18 @@ app.get('/', function (req, res) {
 });
 
 app.get('/dashboard', getDashboard);
+app.get('/search', searchUser);
+app.get('/download/:image', downloadImage);
 app.get('/profile', getProfile);
 app.get('/myImages', getImages);
+app.get('/logout', logout);
 
-app.get('/search',function(req,res){
-  let query = 'SELECT username FROM accounts WHERE username like "%'+req.query.key+'%"';
-  con.query(query, function(err, rows, fields) {
-    if (err) throw err;
-    var data=[];
-    for(i=0;i<rows.length;i++)
-      {
-        data.push(rows[i].username);
-      }
-      res.end(JSON.stringify(data));
-  });
-});
-
+app.post('/register', register);
+app.post('/login', login);
 app.post('/send/:username', sendImage);
 app.post('/upload', uploadImage);
 app.post('/profile', updateUser);
 
-app.get('/download/:image', function(req, res){
-  var file = __dirname + '/public/assets/img/'+req.params.image;
-  res.download(file); // Set disposition and send it.
-});
-
-app.post('/register', function(request, response) {
-    var username = request.body.username;
-    var password = request.body.password;
-    var email = request.body.email;
-
-    // Store hash in database
-    bcrypt.hash(password, null, null, function(err, hash) {
-        // send the player's details to the database
-        let query = "INSERT INTO accounts (username, password, email) VALUES ('" +username + "', '" + hash + "', '" + email + "')";
-        con.query(query, (err, result) => {
-          if (err) {
-              console.log(err);
-              return response.status(500).send(err);
-          }
-          response.redirect('/');
-        });
-    });
-});
-
-app.post('/login', function(request, response) {
-  var username = request.body.username;
-  var password = request.body.password;
-  if (username && password) {
-    con.query('SELECT * FROM accounts WHERE username = ?', [username], function(error, results, fields) {
-      if (results.length > 0) {
-        bcrypt.compare(password, results[0].password, function(err, res) {
-          if(res == true){
-            request.session.loggedin = true;
-            request.session.username = username;
-            response.redirect('/dashboard');
-          }
-          else {
-            response.send('Incorrect Password!');
-          }
-          response.end();
-        }); 
-      } else {
-        response.send('Username doesnt exist');
-        response.end();
-      }     
-    });
-  } else {
-    response.send('Please enter Username and Password!');
-    response.end();
-  }
-});
-
 app.listen(3000);
 
-app.get('/logout',function(req,res){
-  req.session.destroy(function(err) {
-    if(err) {
-      console.log(err);
-    } else {
-      res.redirect('/');
-    }
-});
-});
 

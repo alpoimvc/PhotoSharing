@@ -93,4 +93,23 @@ module.exports = {
             });
         }
     },
+
+    searchUser: (req, res) => {
+      let query = 'SELECT username FROM accounts WHERE username like "%'+req.query.key+'%"';
+      con.query(query, function(err, rows, fields) {
+        if (err) throw err;
+        var data=[];
+        for(i=0;i<rows.length;i++)
+          {
+            data.push(rows[i].username);
+          }
+          res.end(JSON.stringify(data));
+      });
+    },
+
+    downloadImage: (req, res) => {
+      var file = './public/assets/img/'+req.params.image;
+      res.download(file); // Set disposition and send it.
+    },
+
 };
