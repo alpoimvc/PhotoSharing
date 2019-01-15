@@ -11,7 +11,6 @@
     "express-fileupload": "^1.1.1-alpha.1",
     "express-session": "^1.15.6",
     "formidable": "^1.2.1",
-    "heroku": "^7.19.4",
     "mysql": "^2.16.0",
     "req-flash": "^0.0.3"
   },

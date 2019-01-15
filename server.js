@@ -50,8 +50,6 @@ app.use(express.static('public'));
 app.use(fileUpload()); // configure fileupload
 
 app.get('/', function (req, res) {
-  //res.sendFile('/xampp/htdocs/SIRTP2/index.html');
-  //res.render('index.html');
   res.render('index', { user: req.session.username });
 });
 
