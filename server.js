@@ -71,6 +71,6 @@ app.post('/send/:username', sendImage);
 app.post('/upload', uploadImage);
 app.post('/profile', updateUser);
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 
