@@ -1,6 +1,6 @@
 # PicShare
 
-A photo website made with NodeJs + HTML/CSS/Javascript for uploading pictures
+A website made with NodeJs + HTML/CSS/Javascript for uploading pictures
 
 ### Prerequisites
 
